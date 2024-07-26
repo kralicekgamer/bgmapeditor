@@ -1,0 +1,2 @@
+# BgMapEditor [modified version]
+## Install 
