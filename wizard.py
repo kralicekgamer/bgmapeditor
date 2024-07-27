@@ -1,4 +1,15 @@
+import os
 import requests
+
+reset = "\033[0m"
+red = "\033[31m"
+green = "\033[32m"
+yellow = "\033[93m"
+
+succes = "[" + green + "*" + reset + "] "
+info = "[" + yellow + "I" + reset + "] "
+failed = "[" + red + "!" + reset + "] "
+
 
 def set_language():
     language = input("Choose language (cs, de, en, fr, pt): ")
@@ -14,16 +25,13 @@ def set_language():
         with open('./trunk/bgmapeditor.cfg', 'w') as file:
             file.write(content)
         
-        print(f"Language set to {language}.")
+        print(succes + "Language set to " + language)
     else:
-        print("Invalid input. Please choose from the available languages.")
+        print(info + "Invalid input. Please choose from the available languages.")
         set_language()  
 
-import os
-import requests
 
 def download_file(pack_number):
-    # Define URLs for downloading files based on pack_number
     file_urls = {
         1: 'https://www.zombicide.com/dl/mapeditor/D1_West_Undead_Or_Alive.zip',
         2: 'https://www.zombicide.com/dl/mapeditor/D2_West_Gears_And_Guns.zip',
@@ -48,23 +56,22 @@ def download_file(pack_number):
         21: 'https://www.zombicide.com/dl/mapeditor/Z1_Characters.zip',
     }
 
-    # Directory to save files
     download_dir = './trunk/packs'
     os.makedirs(download_dir, exist_ok=True)
 
     url = file_urls.get(pack_number)
     if url:
-        print(f"Downloading pack {pack_number} from {url}...")
         response = requests.get(url)
         if response.status_code == 200:
             file_path = os.path.join(download_dir, f"pack_{pack_number}.zip")
             with open(file_path, 'wb') as f:
                 f.write(response.content)
-            print(f"Pack {pack_number} downloaded successfully to {file_path}.")
+                print(succes + "Pack succesly downloaded")
         else:
-            print(f"Failed to download pack {pack_number}. Status code: {response.status_code}")
+            print(failed + "Failed to download pack " + pack_number + " Status code: " + response.status_code)
     else:
-        print("Invalid pack number.")
+        print(info + "Invalid pack number.")
+
 
 def download_packs():
     print("""
@@ -110,23 +117,22 @@ def download_packs():
         pack_number = int(input("Choose pack number: "))
         if 1 <= pack_number <= 23:
             if pack_number == 22:
-                print("All packs download feature is not implemented.")
+                print(info + "All packs download feature is not implemented.")
             elif pack_number == 23:
-                print("Exit selected. Exiting the function.")
+                print(info + "Exit selected. Exiting the function.")
             else:
                 download_file(pack_number)
         else:
-            print("Invalid number. Please choose a number between 1 and 23.")
-            download_packs()  # Recursively call download_packs on invalid input
+            print(info +  "Invalid number. Please choose a number between 1 and 23.")
+            download_packs() 
     except ValueError:
-        print("Invalid input. Please enter a valid number.")
-        download_packs()  # Recursively call download_packs on invalid input
+        print(info + "Invalid input. Please enter a valid number.")
+        download_packs() 
 
 def exit_program():
     print("Application is ready. ")
     print("If you downloading packs, import it in app.")
     print("Run bgmapeditor.exe in ./trunk folder.")
-    print("For more help read README.md")
     input("Press any key to exit...")
     exit()
 
@@ -135,6 +141,7 @@ while True:
     print("""
     Welcome to the bgmapeditor installation wizard.
     (C) 2024 by KralicekGamer
+          
     1 - Set language
     2 - Download packs
     3 - Exit
@@ -147,7 +154,7 @@ while True:
     elif action == "3":
         exit_program()
     else:
-        print("Invalid input.")
+        print(info + "Invalid input.")
 
 
 
