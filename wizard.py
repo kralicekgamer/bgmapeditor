@@ -163,6 +163,3 @@ while True:
         exit_program()
     else:
         print(info + "Invalid input.")
-
-
-
