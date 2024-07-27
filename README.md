@@ -31,5 +31,6 @@
 - Edited documentation
 - Deleted unnecessary folders
 - Added and modifed languages
+- Added more sign support
 - Added pack folder
 - Added wizard for installation

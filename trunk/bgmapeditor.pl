@@ -7,7 +7,6 @@ use strict;
 
 my ($name,$execpath,$suffix,$main);
 
-
 #=====================================================#
 # IMPORTS 
 #=====================================================#
@@ -65,6 +64,9 @@ use Tk::TileChoser;
 use Tk::TileChoser::AvButton;
 use Tk::TileChoser::PackEntry;
 
+# Added more sign support
+use utf8; 
+use open ':std', ':encoding(UTF-8)'; 
 
 #=====================================================#
 # GLOBAL VARIABLES
