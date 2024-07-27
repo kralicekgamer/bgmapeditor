@@ -3,6 +3,7 @@
 - Lot of thanks to nmzi
 
 ## Install 
+- YOU NEED INSTALL STRAWBERRY PERL download and install it on https://strawberryperl.com/
 - Download zip of code or download lasted relese
 - Run wizard.exe for wizard install. 
 

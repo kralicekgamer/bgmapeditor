@@ -129,12 +129,17 @@ def download_packs():
         print(info + "Invalid input. Please enter a valid number.")
         download_packs() 
 
+def install_perl():
+    print("For run bgmapeditor you need strawberry perl.")
+    print("Download lasted relese on https://strawberryperl.com/ and install it.")
+
 def exit_program():
     print("Application is ready. ")
     print("If you downloading packs, import it in app.")
     print("Run bgmapeditor.exe in ./trunk folder.")
     input("Press any key to exit...")
     exit()
+
 
 
 while True:
@@ -144,7 +149,8 @@ while True:
           
     1 - Set language
     2 - Download packs
-    3 - Exit
+    3 - Install strawberry perl
+    4 - Exit
     """)
     action = input("What action do you want: ")
     if action == "1":
@@ -152,6 +158,8 @@ while True:
     elif action == "2":
         download_packs()
     elif action == "3":
+        install_perl()
+    elif action == "4":
         exit_program()
     else:
         print(info + "Invalid input.")
