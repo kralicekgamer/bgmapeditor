@@ -3,65 +3,79 @@ import requests
 import tkinter as tk
 from tkinter import messagebox, simpledialog
 
+reset = "\033[0m"
+red = "\033[31m"
+green = "\033[32m"
+yellow = "\033[93m"
+
+success = f"[{green}*{reset}] "
+info = f"[{yellow}I{reset}] "
+failed = f"[{red}!{reset}] "
+
+valid_languages = ["cs", "de", "en", "fr", "pt"]
+file_urls = {
+    1: 'https://www.zombicide.com/dl/mapeditor/D1_West_Undead_Or_Alive.zip',
+    2: 'https://www.zombicide.com/dl/mapeditor/D2_West_Gears_And_Guns.zip',
+    3: 'https://www.zombicide.com/dl/mapeditor/G-Zombicide-A5-2E.zip',
+    4: 'https://www.zombicide.com/dl/mapeditor/G-Zombicide-A6-ZC.zip',
+    5: 'https://www.zombicide.com/dl/mapeditor/G-Zombicide-A7-FH.zip',
+    6: 'https://www.zombicide.com/dl/mapeditor/B1_Fant_BP.zip',
+    7: 'https://www.zombicide.com/dl/mapeditor/B2_Fant_GH.zip',
+    8: 'https://www.zombicide.com/dl/mapeditor/B3_Fant_WB.zip',
+    9: 'https://www.zombicide.com/dl/mapeditor/B4_Fant_FF.zip',
+    10: 'https://www.zombicide.com/dl/mapeditor/B5_Fant_NRFTW.zip',
+    11: 'https://www.zombicide.com/dl/mapeditor/C1_Sci_Invader.zip',
+    12: 'https://www.zombicide.com/dl/mapeditor/C2_Sci_Dark_Side.zip',
+    13: 'https://www.zombicide.com/dl/mapeditor/C3_Sci_Black_Ops.zip',
+    14: 'https://www.zombicide.com/dl/mapeditor/C4_Sci_Operation_Persephone.zip',
+    15: 'https://www.zombicide.com/dl/mapeditor/E1_Mov_Night_Of_The_Living_Dead.zip',
+    16: 'https://www.zombicide.com/dl/mapeditor/A1_Mod-Zombicide.zip',
+    17: 'https://www.zombicide.com/dl/mapeditor/A2_Mod_PO.zip',
+    18: 'https://www.zombicide.com/dl/mapeditor/A3_Mod_RM.zip',
+    19: 'https://www.zombicide.com/dl/mapeditor/A4_Mod_TCM.zip',
+    20: 'https://www.zombicide.com/dl/mapeditor/A5_Mod_AN.zip',
+    21: 'https://www.zombicide.com/dl/mapeditor/Z1_Characters.zip',
+}
+
 def set_language():
-    language = simpledialog.askstring("Set Language", "Choose language (cs, de, en, fr, pt):")
-    valid_languages = ["cs", "de", "en", "fr", "pt"]
+    language = simpledialog.askstring("Language", "Choose language (cs, de, en, fr, pt):")
     if language in valid_languages:
-        with open('./trunk/bgmapeditor.cfg', 'r') as file:
-            content = file.read()
-        
-        content = content.replace("en", language)
-        
-        with open('./trunk/bgmapeditor.cfg', 'w') as file:
-            file.write(content)
-        
-        messagebox.showinfo("Success", f"Language set to {language}")
+        config_path = './trunk/bgmapeditor.cfg'
+        try:
+            with open(config_path, 'r') as file:
+                content = file.read()
+            content = content.replace("en", language)
+            with open(config_path, 'w') as file:
+                file.write(content)
+            messagebox.showinfo("Success", "Language set to " + language)
+        except FileNotFoundError:
+            messagebox.showerror("Error", "Configuration file not found.")
     else:
-        messagebox.showwarning("Warning", "Invalid input. Please choose from the available languages.")
+        messagebox.showinfo("Invalid Input", "Invalid input. Please choose from the available languages.")
 
 def download_file(pack_number):
-    file_urls = {
-        1: 'https://www.zombicide.com/dl/mapeditor/D1_West_Undead_Or_Alive.zip',
-        2: 'https://www.zombicide.com/dl/mapeditor/D2_West_Gears_And_Guns.zip',
-        3: 'https://www.zombicide.com/dl/mapeditor/G-Zombicide-A5-2E.zip',
-        4: 'https://www.zombicide.com/dl/mapeditor/G-Zombicide-A6-ZC.zip',
-        5: 'https://www.zombicide.com/dl/mapeditor/G-Zombicide-A7-FH.zip',
-        6: 'https://www.zombicide.com/dl/mapeditor/B1_Fant_BP.zip',
-        7: 'https://www.zombicide.com/dl/mapeditor/B2_Fant_GH.zip',
-        8: 'https://www.zombicide.com/dl/mapeditor/B3_Fant_WB.zip',
-        9: 'https://www.zombicide.com/dl/mapeditor/B4_Fant_FF.zip',
-        10: 'https://www.zombicide.com/dl/mapeditor/B5_Fant_NRFTW.zip',
-        11: 'https://www.zombicide.com/dl/mapeditor/C1_Sci_Invader.zip',
-        12: 'https://www.zombicide.com/dl/mapeditor/C2_Sci_Dark%20Side.zip',
-        13: 'https://www.zombicide.com/dl/mapeditor/C3_Sci_Black%20Ops.zip',
-        14: 'https://www.zombicide.com/dl/mapeditor/C4_Sci_Operation%20Persephone.zip',
-        15: 'https://www.zombicide.com/dl/mapeditor/E1_Mov_Night_Of_The_Living_Dead.zip',
-        16: 'https://www.zombicide.com/dl/mapeditor/A1_Mod-Zombicide.zip',
-        17: 'https://www.zombicide.com/dl/mapeditor/A2_Mod_PO.zip',
-        18: 'https://www.zombicide.com/dl/mapeditor/A3_Mod_RM.zip',
-        19: 'https://www.zombicide.com/dl/mapeditor/A4_Mod_TCM.zip',
-        20: 'https://www.zombicide.com/dl/mapeditor/A5_Mod_AN.zip',
-        21: 'https://www.zombicide.com/dl/mapeditor/Z1_Characters.zip',
-    }
+    url = file_urls.get(pack_number)
+    if not url:
+        messagebox.showinfo("Invalid Pack Number", "Invalid pack number.")
+        return
 
     download_dir = './trunk/packs'
     os.makedirs(download_dir, exist_ok=True)
-
-    url = file_urls.get(pack_number)
-    if url:
+    
+    try:
         response = requests.get(url)
-        if response.status_code == 200:
-            file_path = os.path.join(download_dir, f"pack_{pack_number}.zip")
-            with open(file_path, 'wb') as f:
-                f.write(response.content)
-                messagebox.showinfo("Success", "Pack successfully downloaded")
-        else:
-            messagebox.showerror("Error", f"Failed to download pack {pack_number}. Status code: {response.status_code}")
-    else:
-        messagebox.showwarning("Warning", "Invalid pack number.")
+        response.raise_for_status()
+        file_path = os.path.join(download_dir, f"pack_{pack_number}.zip")
+        with open(file_path, 'wb') as f:
+            f.write(response.content)
+        messagebox.showinfo("Success", "Pack successfully downloaded")
+    except requests.HTTPError as e:
+        messagebox.showerror("HTTP Error", f"HTTP Error: {e}")
+    except requests.RequestException as e:
+        messagebox.showerror("Download Error", f"Failed to download pack {pack_number}. Error: {e}")
 
 def download_packs():
-    packs = """
+    packs_info = """
     Western Zombicide:
     1 - Zombicide: Undead or Alive
     2 - Zombicide: Gears and Guns
@@ -91,42 +105,54 @@ def download_packs():
     16 - Zombicide Season 1: (the original box)
     17 - Zombicide Season 2: Prison Outbreak
     18 - Zombicide Season 3: Rue Morgue
-    19 - Expanstion: Toxic City Mall
-    20 - Expanstion: Angry Neigbors
+    19 - Expansion: Toxic City Mall
+    20 - Expansion: Angry Neighbors
     21 - Zombie silhouette pack   
 
     22 - All
     23 - Exit
+    All original packs are available on https://www.zombicide.com/zombicide-mapeditor/
     """
-    pack_number = simpledialog.askinteger("Download Packs", f"Choose pack number:\n{packs}")
-    if pack_number == 22:
-        messagebox.showinfo("Info", "All packs download feature is not implemented.")
-    elif pack_number == 23:
-        messagebox.showinfo("Info", "Exit selected. Exiting the function.")
-    elif 1 <= pack_number <= 21:
-        download_file(pack_number)
-    else:
-        messagebox.showwarning("Warning", "Invalid number. Please choose a number between 1 and 23.")
+    def on_download():
+        try:
+            pack_number = int(pack_number_entry.get())
+            if pack_number == 22:
+                messagebox.showinfo("Info", "All packs download feature is not implemented.")
+            elif pack_number == 23:
+                messagebox.showinfo("Info", "Exit selected. Exiting the function.")
+            elif 1 <= pack_number <= 21:
+                download_file(pack_number)
+            else:
+                messagebox.showinfo("Invalid Number", "Invalid number. Please choose a number between 1 and 23.")
+        except ValueError:
+            messagebox.showinfo("Invalid Input", "Invalid input. Please enter a valid number.")
+    
+    packs_window = tk.Toplevel(root)
+    packs_window.title("Download Packs")
 
-def install_perl():
-    messagebox.showinfo("Install Strawberry Perl", "For running bgmapeditor you need Strawberry Perl.\nDownload the latest release on https://strawberryperl.com/ and install it.")
+    tk.Label(packs_window, text=packs_info).pack(pady=10)
+    tk.Label(packs_window, text="Choose pack number:").pack(pady=5)
+    
+    pack_number_entry = tk.Entry(packs_window)
+    pack_number_entry.pack(pady=5)
+    
+    tk.Button(packs_window, text="Download", command=on_download).pack(pady=5)
+
+def install_perl(): 
+    messagebox.showinfo("Install Perl", "To run bgmapeditor you need Strawberry Perl.\nDownload the latest release from https://strawberryperl.com/ and install it.")
 
 def exit_program():
-    messagebox.showinfo("Exit", "Application is ready.\nIf you downloaded packs, import them in the app.\nRun bgmapeditor.exe in ./trunk folder.")
+    messagebox.showinfo("Ready", "Application is ready.\nIf you downloaded packs, import them in the app.\nRun bgmapeditor.exe in the ./trunk folder.")
     root.destroy()
 
 root = tk.Tk()
-root.title("BGMapEditor Wizard")
-root.geometry("500x400")
+root.title("Bgmapeditor Installation Wizard")
 
-frame = tk.Frame(root, padx=20, pady=20)
-frame.pack(expand=True, fill=tk.BOTH)
+tk.Label(root, text="Welcome to the bgmapeditor installation wizard.\n(C) 2024 by KralicekGamer").pack(pady=10)
 
-tk.Label(frame, text="BGMapEditor Wizard", font=("Helvetica", 16)).pack(pady=10)
-
-tk.Button(frame, text="Set Language", command=set_language, width=25, height=2).pack(pady=5)
-tk.Button(frame, text="Download Packs", command=download_packs, width=25, height=2).pack(pady=5)
-tk.Button(frame, text="Install Strawberry Perl", command=install_perl, width=25, height=2).pack(pady=5)
-tk.Button(frame, text="Exit", command=exit_program, width=25, height=2).pack(pady=5)
+tk.Button(root, text="Set Language", command=set_language).pack(pady=5)
+tk.Button(root, text="Download Packs", command=download_packs).pack(pady=5)
+tk.Button(root, text="Install Strawberry Perl", command=install_perl).pack(pady=5)
+tk.Button(root, text="Exit", command=exit_program).pack(pady=5)
 
 root.mainloop()

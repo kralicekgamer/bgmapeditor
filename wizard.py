@@ -6,30 +6,30 @@ red = "\033[31m"
 green = "\033[32m"
 yellow = "\033[93m"
 
-succes = "[" + green + "*" + reset + "] "
-info = "[" + yellow + "I" + reset + "] "
-failed = "[" + red + "!" + reset + "] "
-
+success = f"[{green}*{reset}] "
+info = f"[{yellow}I{reset}] "
+failed = f"[{red}!{reset}] "
 
 def set_language():
+    valid_languages = ["cs", "de", "en", "fr", "pt"]
     language = input("Choose language (cs, de, en, fr, pt): ")
 
-    valid_languages = ["cs", "de", "en", "fr", "pt"]
-    
     if language in valid_languages:
-        with open('./trunk/bgmapeditor.cfg', 'r') as file:
-            content = file.read()
-        
-        content = content.replace("en", language)
-        
-        with open('./trunk/bgmapeditor.cfg', 'w') as file:
-            file.write(content)
-        
-        print(succes + "Language set to " + language)
+        config_path = './trunk/bgmapeditor.cfg'
+        try:
+            with open(config_path, 'r') as file:
+                content = file.read()
+
+            content = content.replace("en", language)
+            with open(config_path, 'w') as file:
+                file.write(content)
+
+            print(success + "Language set to " + language)
+        except FileNotFoundError:
+            print(failed + "Configuration file not found.")
     else:
         print(info + "Invalid input. Please choose from the available languages.")
-        set_language()  
-
+        set_language()
 
 def download_file(pack_number):
     file_urls = {
@@ -44,9 +44,9 @@ def download_file(pack_number):
         9: 'https://www.zombicide.com/dl/mapeditor/B4_Fant_FF.zip',
         10: 'https://www.zombicide.com/dl/mapeditor/B5_Fant_NRFTW.zip',
         11: 'https://www.zombicide.com/dl/mapeditor/C1_Sci_Invader.zip',
-        12: 'https://www.zombicide.com/dl/mapeditor/C2_Sci_Dark%20Side.zip',
-        13: 'https://www.zombicide.com/dl/mapeditor/C3_Sci_Black%20Ops.zip',
-        14: 'https://www.zombicide.com/dl/mapeditor/C4_Sci_Operation%20Persephone.zip',
+        12: 'https://www.zombicide.com/dl/mapeditor/C2_Sci_Dark_Side.zip',
+        13: 'https://www.zombicide.com/dl/mapeditor/C3_Sci_Black_Ops.zip',
+        14: 'https://www.zombicide.com/dl/mapeditor/C4_Sci_Operation_Persephone.zip',
         15: 'https://www.zombicide.com/dl/mapeditor/E1_Mov_Night_Of_The_Living_Dead.zip',
         16: 'https://www.zombicide.com/dl/mapeditor/A1_Mod-Zombicide.zip',
         17: 'https://www.zombicide.com/dl/mapeditor/A2_Mod_PO.zip',
@@ -56,25 +56,28 @@ def download_file(pack_number):
         21: 'https://www.zombicide.com/dl/mapeditor/Z1_Characters.zip',
     }
 
+    url = file_urls.get(pack_number)
+    if not url:
+        print(info + "Invalid pack number.")
+        return
+
     download_dir = './trunk/packs'
     os.makedirs(download_dir, exist_ok=True)
-
-    url = file_urls.get(pack_number)
-    if url:
+    
+    try:
         response = requests.get(url)
-        if response.status_code == 200:
-            file_path = os.path.join(download_dir, f"pack_{pack_number}.zip")
-            with open(file_path, 'wb') as f:
-                f.write(response.content)
-                print(succes + "Pack succesly downloaded")
-        else:
-            print(failed + "Failed to download pack " + pack_number + " Status code: " + response.status_code)
-    else:
-        print(info + "Invalid pack number.")
-
+        response.raise_for_status()
+        file_path = os.path.join(download_dir, f"pack_{pack_number}.zip")
+        with open(file_path, 'wb') as f:
+            f.write(response.content)
+        print(success + "Pack successfully downloaded")
+    except requests.HTTPError as e:
+        print(failed + f"HTTP Error: {e}")
+    except requests.RequestException as e:
+        print(failed + f"Failed to download pack {pack_number}. Error: {e}")
 
 def download_packs():
-    print("""
+    packs_info = """
     Western Zombicide:
     1 - Zombicide: Undead or Alive
     2 - Zombicide: Gears and Guns
@@ -104,55 +107,54 @@ def download_packs():
     16 - Zombicide Season 1: (the original box)
     17 - Zombicide Season 2: Prison Outbreak
     18 - Zombicide Season 3: Rue Morgue
-    19 - Expanstion: Toxic City Mall
-    20 - Expanstion: Angry Neigbors
+    19 - Expansion: Toxic City Mall
+    20 - Expansion: Angry Neighbors
     21 - Zombie silhouette pack   
 
     22 - All
     23 - Exit
-    All original pack are available on https://www.zombicide.com/zombicide-mapeditor/
-""")
-    
+    All original packs are available on https://www.zombicide.com/zombicide-mapeditor/
+    """
+    print(packs_info)
+
     try:
         pack_number = int(input("Choose pack number: "))
-        if 1 <= pack_number <= 23:
-            if pack_number == 22:
-                print(info + "All packs download feature is not implemented.")
-            elif pack_number == 23:
-                print(info + "Exit selected. Exiting the function.")
-            else:
-                download_file(pack_number)
+        if pack_number == 22:
+            print(info + "All packs download feature is not implemented.")
+        elif pack_number == 23:
+            print(info + "Exit selected. Exiting the function.")
+        elif 1 <= pack_number <= 21:
+            download_file(pack_number)
         else:
-            print(info +  "Invalid number. Please choose a number between 1 and 23.")
-            download_packs() 
+            print(info + "Invalid number. Please choose a number between 1 and 23.")
+            download_packs()
     except ValueError:
         print(info + "Invalid input. Please enter a valid number.")
-        download_packs() 
+        download_packs()
 
 def install_perl():
-    print("For run bgmapeditor you need strawberry perl.")
-    print("Download lasted relese on https://strawberryperl.com/ and install it.")
+    print("To run bgmapeditor you need Strawberry Perl.")
+    print("Download the latest release from https://strawberryperl.com/ and install it.")
 
 def exit_program():
-    print("Application is ready. ")
-    print("If you downloading packs, import it in app.")
-    print("Run bgmapeditor.exe in ./trunk folder.")
+    print("Application is ready.")
+    print("If you downloaded packs, import them in the app.")
+    print("Run bgmapeditor.exe in the ./trunk folder.")
     input("Press any key to exit...")
     exit()
-
 
 
 while True:
     print("""
     Welcome to the bgmapeditor installation wizard.
     (C) 2024 by KralicekGamer
-          
+              
     1 - Set language
     2 - Download packs
-    3 - Install strawberry perl
+    3 - Install Strawberry Perl
     4 - Exit
     """)
-    action = input("What action do you want: ")
+    action = input("What action do you want to take: ")
     if action == "1":
         set_language()
     elif action == "2":
