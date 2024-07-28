@@ -12,8 +12,8 @@
 - README.md - info file
 - wizard.exe - file what help with instalation
 - wizard.py - source code of wizard.exe
-- wizard_gui.exe - gui of wizard.exr
-- wizard_gui.py - source code of wizard_gui.exe
+- wizard_gui.exe - gui of wizard.exe
+- wizard_gui.pyw - source code of wizard_gui.exe
 
 **./trunk folder (files)**:
 - bgmapeditor.cfg - language config

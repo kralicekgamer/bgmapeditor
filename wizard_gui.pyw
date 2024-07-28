@@ -14,27 +14,27 @@ failed = f"[{red}!{reset}] "
 
 valid_languages = ["cs", "de", "en", "fr", "pt"]
 file_urls = {
-    1: 'https://www.zombicide.com/dl/mapeditor/D1_West_Undead_Or_Alive.zip',
-    2: 'https://www.zombicide.com/dl/mapeditor/D2_West_Gears_And_Guns.zip',
-    3: 'https://www.zombicide.com/dl/mapeditor/G-Zombicide-A5-2E.zip',
-    4: 'https://www.zombicide.com/dl/mapeditor/G-Zombicide-A6-ZC.zip',
-    5: 'https://www.zombicide.com/dl/mapeditor/G-Zombicide-A7-FH.zip',
-    6: 'https://www.zombicide.com/dl/mapeditor/B1_Fant_BP.zip',
-    7: 'https://www.zombicide.com/dl/mapeditor/B2_Fant_GH.zip',
-    8: 'https://www.zombicide.com/dl/mapeditor/B3_Fant_WB.zip',
-    9: 'https://www.zombicide.com/dl/mapeditor/B4_Fant_FF.zip',
-    10: 'https://www.zombicide.com/dl/mapeditor/B5_Fant_NRFTW.zip',
-    11: 'https://www.zombicide.com/dl/mapeditor/C1_Sci_Invader.zip',
-    12: 'https://www.zombicide.com/dl/mapeditor/C2_Sci_Dark_Side.zip',
-    13: 'https://www.zombicide.com/dl/mapeditor/C3_Sci_Black_Ops.zip',
-    14: 'https://www.zombicide.com/dl/mapeditor/C4_Sci_Operation_Persephone.zip',
-    15: 'https://www.zombicide.com/dl/mapeditor/E1_Mov_Night_Of_The_Living_Dead.zip',
-    16: 'https://www.zombicide.com/dl/mapeditor/A1_Mod-Zombicide.zip',
-    17: 'https://www.zombicide.com/dl/mapeditor/A2_Mod_PO.zip',
-    18: 'https://www.zombicide.com/dl/mapeditor/A3_Mod_RM.zip',
-    19: 'https://www.zombicide.com/dl/mapeditor/A4_Mod_TCM.zip',
-    20: 'https://www.zombicide.com/dl/mapeditor/A5_Mod_AN.zip',
-    21: 'https://www.zombicide.com/dl/mapeditor/Z1_Characters.zip',
+    1: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/D1_West_Undead_Or_Alive.zip',
+    2: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/D2_West_Gears_And_Guns.zip',
+    3: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/G-Zombicide-A5-2E.zip',
+    4: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/G-Zombicide-A6-ZC.zip',
+    5: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/G-Zombicide-A7-FH.zip',
+    6: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/B1_Fant_BP.zip',
+    7: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/B2_Fant_GH.zip',
+    8: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/B3_Fant_WB.zip',
+    9: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/B4_Fant_FF.zip',
+    10: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/B5_Fant_NRFTW.zip',
+    11: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/C1_Sci_Invader.zip',
+    12: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/C2_Sci_Dark_Side.zip',
+    13: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/C3_Sci_Black_Ops.zip',
+    14: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/C4_Sci_Operation_Persephone.zip',
+    15: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/E1_Mov_Night_Of_The_Living_Dead.zip',
+    16: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/A1_Mod-Zombicide.zip',
+    17: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/A2_Mod_PO.zip',
+    18: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/A3_Mod_RM.zip',
+    19: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/A4_Mod_TCM.zip',
+    20: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/A5_Mod_AN.zip',
+    21: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/Z1_Characters.zip',
 }
 
 def set_language():
@@ -112,6 +112,7 @@ def download_packs():
     22 - All
     23 - Exit
     All original packs are available on https://www.zombicide.com/zombicide-mapeditor/
+    All packs are hosted on https://github.com/kralicekgamer/filehost/tree/main/zombicide
     """
     def on_download():
         try:
