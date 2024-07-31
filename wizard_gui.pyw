@@ -12,7 +12,7 @@ success = f"[{green}*{reset}] "
 info = f"[{yellow}I{reset}] "
 failed = f"[{red}!{reset}] "
 
-valid_languages = ["cs", "de", "en", "fr", "pt"]
+valid_languages = ["cs", "de", "en", "fr", "pt", "ru"]
 file_urls = {
     1: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/D1_West_Undead_Or_Alive.zip',
     2: 'https://github.com/kralicekgamer/filehost/raw/main/zombicide/D2_West_Gears_And_Guns.zip',
@@ -38,7 +38,7 @@ file_urls = {
 }
 
 def set_language():
-    language = simpledialog.askstring("Language", "Choose language (cs, de, en, fr, pt):")
+    language = simpledialog.askstring("Language", "Choose language (cs, de, en, fr, pt, ru):")
     if language in valid_languages:
         config_path = './trunk/bgmapeditor.cfg'
         try:

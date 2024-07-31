@@ -35,7 +35,7 @@ m_cancel="Cancelar"
 l_snap="Ajustar &agrave; grade"
 l_unnamed="Sem nome"
 
-i_about="BGMapeditor. By mzi. mzi@nyarlathotep.eu -- doa&ccedil;&otilde;es com PayPal s&atilde;o bem-vindas ;). Este programa &eacute; um software livre; voc&ecirc; pode redistribu&iacute;-lo e/ou modific&aacute;-lo sob os mesmos termos do pr&oacute;prio Perl. Clique no bot&atilde;o de informa&ccedil;&otilde;es em uma pasta de pacote de pe&ccedil;as (tilepack) para ler informa&ccedil;&otilde;es espec&iacute;ficas de copyright (se houver)."
+i_about="BGMapeditor. By mzi. mzi@nyarlathotep.eu -- doa&ccedil;&otilde;es com PayPal s&atilde;o bem-vindas ;). Este programa &eacute; um software livre; voc&ecirc; pode redistribu&iacute;-lo e/ou modific&aacute;-lo sob os mesmos termos do pr&oacute;prio Perl. Clique no bot&atilde;o de informa&ccedil;&otilde;es em uma pasta de pacote de pe&ccedil;as (tilepack) para ler informa&ccedil;&otilde;es espec&iacute;ficas de copyright (se houver). Modified by KralicekGamer."
 i_manual="Veja ./doc/index.html"
 i_delete_package="Selecione o pacote que deseja excluir. Observe que os mapas criados com pacotes que foram exclu&amp;iacute;dos n&atilde;o ser&atilde;o mais exibidos corretamente."
 i_copyright="Direitos autorais"

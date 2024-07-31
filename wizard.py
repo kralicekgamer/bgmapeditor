@@ -11,8 +11,8 @@ info = f"[{yellow}I{reset}] "
 failed = f"[{red}!{reset}] "
 
 def set_language():
-    valid_languages = ["cs", "de", "en", "fr", "pt"]
-    language = input("Choose language (cs, de, en, fr, pt): ")
+    valid_languages = ["cs", "de", "en", "fr", "pt", "ru"]
+    language = input("Choose language (cs, de, en, fr, pt, ru): ")
 
     if language in valid_languages:
         config_path = './trunk/bgmapeditor.cfg'
