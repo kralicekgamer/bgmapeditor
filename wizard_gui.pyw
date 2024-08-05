@@ -1,16 +1,7 @@
 import os
 import requests
 import tkinter as tk
-from tkinter import messagebox, simpledialog
-
-reset = "\033[0m"
-red = "\033[31m"
-green = "\033[32m"
-yellow = "\033[93m"
-
-success = f"[{green}*{reset}] "
-info = f"[{yellow}I{reset}] "
-failed = f"[{red}!{reset}] "
+from tkinter import messagebox, simpledialog, scrolledtext
 
 valid_languages = ["cs", "de", "en", "fr", "pt", "ru"]
 file_urls = {
@@ -39,6 +30,8 @@ file_urls = {
 
 def set_language():
     language = simpledialog.askstring("Language", "Choose language (cs, de, en, fr, pt, ru):")
+    if language is None:
+        return  
     if language in valid_languages:
         config_path = './trunk/bgmapeditor.cfg'
         try:
@@ -130,14 +123,20 @@ def download_packs():
     
     packs_window = tk.Toplevel(root)
     packs_window.title("Download Packs")
+    packs_window.geometry("600x450")
+    packs_window.configure(bg="#f0f0f0")
 
-    tk.Label(packs_window, text=packs_info).pack(pady=10)
-    tk.Label(packs_window, text="Choose pack number:").pack(pady=5)
+    tk.Label(packs_window, text="Available Packs", font=("Helvetica", 14), bg="#f0f0f0").pack(pady=10)
+    scrolled_text = scrolledtext.ScrolledText(packs_window, wrap=tk.WORD, width=60, height=15, font=("Helvetica", 10))
+    scrolled_text.insert(tk.END, packs_info)
+    scrolled_text.config(state=tk.DISABLED)
+    scrolled_text.pack(pady=10)
+    tk.Label(packs_window, text="Choose pack number:", font=("Helvetica", 12), bg="#f0f0f0").pack(pady=5)
     
-    pack_number_entry = tk.Entry(packs_window)
+    pack_number_entry = tk.Entry(packs_window, font=("Helvetica", 12))
     pack_number_entry.pack(pady=5)
     
-    tk.Button(packs_window, text="Download", command=on_download).pack(pady=5)
+    tk.Button(packs_window, text="Download", command=on_download, font=("Helvetica", 12), bg="#4CAF50", fg="white").pack(pady=5)
 
 def install_perl(): 
     messagebox.showinfo("Install Perl", "To run bgmapeditor you need Strawberry Perl.\nDownload the latest release from https://strawberryperl.com/ and install it.")
@@ -148,12 +147,15 @@ def exit_program():
 
 root = tk.Tk()
 root.title("Bgmapeditor Installation Wizard")
+root.geometry("600x450")
+root.configure(bg="#f0f0f0")
 
-tk.Label(root, text="Welcome to the bgmapeditor installation wizard.\n(C) 2024 by KralicekGamer").pack(pady=10)
+tk.Label(root, text="Welcome to the bgmapeditor installation wizard", font=("Helvetica", 16), bg="#f0f0f0").pack(pady=10)
+tk.Label(root, text="(C) 2024 by KralicekGamer", font=("Helvetica", 12), bg="#f0f0f0").pack(pady=5)
 
-tk.Button(root, text="Set Language", command=set_language).pack(pady=5)
-tk.Button(root, text="Download Packs", command=download_packs).pack(pady=5)
-tk.Button(root, text="Install Strawberry Perl", command=install_perl).pack(pady=5)
-tk.Button(root, text="Exit", command=exit_program).pack(pady=5)
+tk.Button(root, text="Set Language", command=set_language, font=("Helvetica", 12), bg="#4CAF50", fg="white").pack(pady=5)
+tk.Button(root, text="Download Packs", command=download_packs, font=("Helvetica", 12), bg="#2196F3", fg="white").pack(pady=5)
+tk.Button(root, text="Install Strawberry Perl", command=install_perl, font=("Helvetica", 12), bg="#FFC107", fg="white").pack(pady=5)
+tk.Button(root, text="Exit", command=exit_program, font=("Helvetica", 12), bg="#F44336", fg="white").pack(pady=5)
 
 root.mainloop()
