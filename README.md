@@ -1,4 +1,4 @@
-# BgMapEditor [modified version] [NEED STRAWBERRY PERL
+# BgMapEditor [modified version] [NEED STRAWBERRY PERL]
 - Original version is https://github.com/nmzi/bgmapeditor
 - Lot of thanks to nmzi
 
