@@ -1,39 +1,63 @@
-# BgMapEditor [modified version]
+# BgMapEditor [modified version] [NEED STRAWBERRY PERL
 - Original version is https://github.com/nmzi/bgmapeditor
 - Lot of thanks to nmzi
 
-## Install 
-- YOU NEED INSTALL STRAWBERRY PERL download and install it on https://strawberryperl.com/
-- Download zip of code or download lasted relese
-- Run wizard.exe for wizard install. 
 
-## Info about files
-**This folder**:
+# Download
+1. Download and install [strawberry perl](https://strawberryperl.com/)
+2. Download code 
+3. Unzip code
+4. You can run bgmapeditor.exe or wizard installation
+
+
+# Wizard asisteted installation
+## Info
+- Wizard is added python script what assist you with install
+- Available is python script, exe and gui
+	- wizard.py - wizard console installation
+	- wizard.exe - exe of wizard.py
+	- wizard_gui.py - gui of console wizard
+	- wizard_gui.exe - exe of wizard_gui.py
+
+
+# Info about files
+- ./trunk
+    - ./doc
+        - documentation.html - this file
+        - index.html - documentation by nmzi
+    - ./fonts - font folder
+    - ./img - img folder
+    - ./lang - folder with langs
+    - ./lib - perl lib
+    - ./packs - folder with packs
+    - bgmapeditor.cfg - config file (languages)
+    - bgmapeditor.exe - main program
+    - bgmapeditor.pl - source code of bgmapeditor.exe
+    - winmake.bat - script to make exe
+- LICENSE - license
 - README.md - info file
-- wizard.exe - file what help with instalation
-- wizard.py - source code of wizard.exe
-- wizard_gui.exe - gui of wizard.exe
-- wizard_gui.pyw - source code of wizard_gui.exe
+- requirements.txt - python requirements
+- wizard.py - wizard console installation
+- wizard.exe - exe of wizard.py
+- wizard_gui.py - gui of console wizard
+- wizard_gui.exe - exe of wizard_gui.py
 
-**./trunk folder (files)**:
-- bgmapeditor.cfg - language config
-- bgmapeditor.exe - bgmapeditor
-- bgmapeditor.pl - source code of bgmapeditor.exe
-- winmake.bat - make bgmapeditor.exe 
 
-**./trunk folder (folders)**
-- doc - documentation folder 
-- fonts - font folder
-- img - images what is used for bgmapeditor
-- lib - perl library
-- packs - folder with packs 
+# Changes
+## Added
+- New languages (cs, ru, de)
+- UTF-8 support
+- Packs folder
+- Wizard
+- Documentation
 
-## Modification 
-- Commented source code
-- Builded new exe 
-- Edited documentation
-- Deleted unnecessary folders
-- Added and modifed languages
-- Added more sign support
-- Added pack folder
-- Added wizard for installation
+## Modified
+- Comments in source code
+- Program exe
+- Modified languages (en, pt, fr)
+- README.md
+
+## Deleted
+- Examples folder
+- INSTALL file
+- test.map
