@@ -10,27 +10,20 @@ BGMapEditor allows you to:
 - Save projects in a proprietary format
 
 ## Installation
-### Linux - Binary
-Clone this repo and just run:
+### Windows
+Download relase on releases page or just download this whole repo. Then just run `bgmapeditor.exe`
+
+### Linux
+Clone the repository:
 ```bash
+git clone https://github.com/kralicekgamer/bgmapeditor
+cd bgmapeditor
+```
+
+Run the binary:
+```bash
+chmod +x bgmapeditor
 ./bgmapeditor
-```
-
-### Linux - Build 
-To run development or build binary yourself you need to install packages. Good luck.
-
-#### Packages install
-```bash
-# Debian / Ubuntu
-sudo apt install perl libpar-packer-perl perl-tk libgd-perl freetype6-dev libjpeg-dev libpng-dev libtiff-dev libgif-dev libarchive-zip-perl libhtml-parser-perl
-
-# Arch
-sudo pacman -S perl par-packer perl-tk gd freetype2 libjpeg libtiff libpng libgif perl-archive-zip perl-html-parser
-```
-
-#### Build 
-```bash
-pp -M deprecate --gui -o bgmapeditor bgmapeditor.pl
 ```
 
 
