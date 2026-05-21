@@ -58,3 +58,8 @@ b_map="Fichiers de plans"
 b_all="Tous"
 b_png="Images PNG"
 b_zip="Archives ZIP"
+
+m_view="~Affichage"
+m_theme="~Thème"
+m_theme_light="~Clair"
+m_theme_dark="~Sombre"

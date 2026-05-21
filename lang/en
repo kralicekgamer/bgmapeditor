@@ -30,6 +30,11 @@ m_help='~Help'
 m_manual="~Manual"
 m_about="About"
 
+m_view="~View"
+m_theme="~Theme"
+m_theme_light="~Light"
+m_theme_dark="~Dark"
+
 m_cancel="Cancel"
 
 l_snap="Snap to grid"

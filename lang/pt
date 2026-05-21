@@ -58,3 +58,8 @@ b_map="Arquivos de mapa"
 b_all="Todos"
 b_png="Imagens PNG"
 b_zip="Arquivos ZIP"
+
+m_view="~Visualizar"
+m_theme="~Tema"
+m_theme_light="~Claro"
+m_theme_dark="~Escuro"

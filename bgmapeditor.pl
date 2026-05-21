@@ -65,6 +65,7 @@ $Tk::encodeFallback = 1;
 use TilePack;
 use TileRegistry;
 use ConfigReader;
+use ThemeManager;
 use ImageData;
 use Tk::Map;
 use Tk::Mapeditor;
@@ -103,6 +104,12 @@ unless (-f "$app_dirs{lang}/$cfg{lang}") {
   $cfg{lang} = "fr";
 }
 
+# Ensure valid theme selection (fallback to light)
+$cfg{theme} ||= 'light';
+unless (grep { $_ eq $cfg{theme} } ThemeManager::get_available_themes()) {
+  $cfg{theme} = 'light';
+}
+
 # Load localized strings from language file
 my %lang = _load_language_pack("$app_dirs{lang}/$cfg{lang}");
 
@@ -116,8 +123,10 @@ $cfg{area} = "" unless $cfg{area};
 # Create main application window with improved styling
 $main_window = MainWindow->new(
   -title => $lang{title},
-  -background => '#f0f0f0'
 );
+
+# Load and apply theme
+my $theme = ThemeManager::apply_theme_to_window($cfg{theme}, $main_window);
 
 # Modern font configuration
 $main_window->fontCreate("app_normal",   -size => 10, -family => "Helvetica");
@@ -127,8 +136,8 @@ $main_window->fontCreate("app_small",    -size => 9,  -family => "Helvetica");
 # Apply consistent styling across all widgets
 $main_window->optionAdd("*font",         "app_normal");
 $main_window->optionAdd("*borderWidth",  1);
-$main_window->optionAdd("*background",   "#f0f0f0");
-$main_window->optionAdd("*foreground",   "#333333");
+$main_window->optionAdd("*background",   $theme->{bg_main});
+$main_window->optionAdd("*foreground",   $theme->{fg_primary});
 
 # Create tabbed interface with optimized layout
 my $tab_manager = $main_window->Tabber(
@@ -143,8 +152,8 @@ my $status_bar = $main_window->Label(
   -relief => 'sunken',
   -anchor => 'w',
   -font => "app_small",
-  -background => '#e0e0e0',
-  -foreground => '#666666'
+  -background => $theme->{status_bg},
+  -foreground => $theme->{status_fg}
 )->pack(qw/-side left -fill x -expand 1/);
 
 ################################################################################
@@ -281,6 +290,22 @@ $menu_bar->Cascade(-label => $lang{m_packs}, -menuitems => [
     -accelerator => 'Ctrl+D',
     -compound => "left",
   ],
+]);
+
+# ===== VIEW MENU =====
+$menu_bar->Cascade(-label => $lang{m_view}, -menuitems => [
+  [Cascade => $lang{m_theme}, -menuitems => [
+    [Radiobutton => $lang{m_theme_light},
+      -variable => \$cfg{theme},
+      -value => 'light',
+      -command => sub { _command_switch_theme('light', $theme, $main_window, $status_bar) }
+    ],
+    [Radiobutton => $lang{m_theme_dark},
+      -variable => \$cfg{theme},
+      -value => 'dark',
+      -command => sub { _command_switch_theme('dark', $theme, $main_window, $status_bar) }
+    ],
+  ]],
 ]);
 
 
@@ -780,6 +805,65 @@ sub _load_ui_images {
   }
 
   return %images;
+}
+
+################################################################################
+# Theme Switching Handler
+################################################################################
+
+##
+# _command_switch_theme: Switch application theme and save to config
+# Args: $theme_name - 'light' or 'dark'
+#       $theme_ref - Reference to theme hash
+#       $main_window - Main Tk window
+#       $status_bar - Status bar widget
+##
+sub _command_switch_theme {
+  my ($theme_name, $theme_ref, $main_window, $status_bar) = @_;
+  
+  # Update config
+  $cfg{theme} = $theme_name;
+  
+  # Get new theme colors
+  my $new_theme = ThemeManager::get_theme($theme_name);
+  
+  # Apply new theme to main window
+  $main_window->configure(-background => $new_theme->{bg_main});
+  $main_window->optionAdd("*background", $new_theme->{bg_main});
+  $main_window->optionAdd("*foreground", $new_theme->{fg_primary});
+  
+  # Update status bar colors
+  $status_bar->configure(
+    -background => $new_theme->{status_bg},
+    -foreground => $new_theme->{status_fg}
+  );
+  
+  # Save updated config to file
+  _save_config_file($config_file, %cfg);
+}
+
+##
+# _save_config_file: Save configuration to file
+# Args: $config_path - Path to config file
+#       %config - Configuration hash
+##
+sub _save_config_file {
+  my ($config_path, %config) = @_;
+  
+  eval {
+    open(my $cfg_fh, '>', $config_path) or die "Cannot write config: $!";
+    
+    # Write each config item
+    foreach my $key (sort keys %config) {
+      my $value = $config{$key};
+      if ($value =~ /\s/ || $value =~ /['"\\#]/) {
+        $value = qq("$value");
+      }
+      print $cfg_fh "$key=$value\n";
+    }
+    
+    close($cfg_fh);
+  } or warn "Warning: Could not save config file: $@\n";
 }
 
 ################################################################################
