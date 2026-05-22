@@ -14,16 +14,43 @@ BGMapEditor allows you to:
 Download relase on releases page or just download this whole repo. Then just run `bgmapeditor.exe`
 
 ### Linux
+
 Clone the repository:
 ```bash
 git clone https://github.com/kralicekgamer/bgmapeditor
 cd bgmapeditor
 ```
 
-Run the binary:
+#### Package Installation
+**Debian / Ubuntu (apt):**
 ```bash
-chmod +x bgmapeditor
-./bgmapeditor
+sudo apt update
+sudo apt install perl perl-tk gd libarchive-zip-perl libhtml-parser-perl build-essential
+```
+
+**Arch Linux / Manjaro (pacman):**
+```bash
+sudo pacman -Syu
+sudo pacman -S perl perl-tk gd perl-archive-zip perl-html-parser perl-switch base-devel
+```
+
+#### Perl Modules (via cpanm)
+```bash
+# Install cpanm (Perl package manager)
+sudo cpan App::cpanminus
+
+# Install required Perl modules
+cpanm File::Basename
+cpanm Archive::Zip
+cpanm GD
+cpanm HTML::Entities
+cpanm Tk
+cpanm Switch
+```
+
+#### Run the application:
+```bash
+perl bgmapeditor.pl
 ```
 
 
