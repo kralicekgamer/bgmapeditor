@@ -8,6 +8,7 @@ BGMapEditor allows you to:
 - Work with tiles on modular boards
 - Export maps to images
 - Save projects in a proprietary format
+- You can just import packs from `./packs`
 
 ## Installation
 ### Windows
