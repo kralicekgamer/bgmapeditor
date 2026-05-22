@@ -13,8 +13,31 @@ BGMapEditor allows you to:
 ### Windows
 Download relase on releases page or just download this whole repo. Then just run `bgmapeditor.exe`
 
-### Linux
+#### Build
+If you are trying to build your own exe. You need exactly strawberry perl **5.30.3** portable version.
 
+If you want newer version, good luck.
+
+Then extract in somewhere and run `portableshell.bat`.
+
+Next you need perl modules:
+```bash
+cpanm File::Basename 
+cpanm Archive::Zip
+cpanm GD
+cpanm HTML::Entities
+cpanm Tk # Very problematic module - for this you need exactly perl 5.30.3
+cpanm Switch # Problematic but there is some common fixes and works too on 5.30.3
+cpanm PAR::Packer --notest -v # For build. Problematic on modul test. So skip testing with -notest. 
+```
+
+Then just build with:
+```bash
+cd "C:\...\bgmapeditor"
+pp -M deprecate --gui -o bgmapeditor.exe bgmapeditor.pl
+```
+
+### Linux
 Clone the repository:
 ```bash
 git clone https://github.com/kralicekgamer/bgmapeditor
@@ -34,7 +57,7 @@ sudo pacman -Syu
 sudo pacman -S perl perl-tk gd perl-archive-zip perl-html-parser perl-switch base-devel
 ```
 
-#### Perl Modules (via cpanm)
+#### Perl Modules
 ```bash
 # Install cpanm (Perl package manager)
 sudo cpan App::cpanminus
@@ -53,6 +76,7 @@ cpanm Switch
 perl bgmapeditor.pl
 ```
 
+There are no binary becouse i built it on arch and doesnt work on debian. (problem with new and old packages)
 
 ## Project Structure
 ```
@@ -85,6 +109,7 @@ bgmapeditor/
 - **Code optimization** - Performance improvements and refactoring of the main application code
 - **Cleanup** - Removed obsolete files and streamlined the repository structure
 - **Improved documentation** - Added inline comments for better code maintainability
+- **White/Black Theme** - it works +- :(
 
 ---
 
